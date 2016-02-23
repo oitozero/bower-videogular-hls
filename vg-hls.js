@@ -21,7 +21,6 @@ angular.module("com.2fdevs.videogular.plugins.hls", [])
             restrict: "A",
             require: "^videogular",
             link: function (scope, elem, attr, API) {
-                var context;
                 var player;
                 var hlsTypeRegEx = /^application\/x-mpegURL/i;
 
@@ -36,6 +35,7 @@ angular.module("com.2fdevs.videogular.plugins.hls", [])
                     };
 
                     scope.onSourceChange = function onSourceChange(source) {
+                        if (!source) return;
                         var url = source.src;
 
                         // It's HLS, we use Hls.js
@@ -67,6 +67,7 @@ angular.module("com.2fdevs.videogular.plugins.hls", [])
                             return API.sources;
                         },
                         function (newVal/*, oldVal*/) {
+                            if (!newVal) return;
                             scope.onSourceChange(newVal[0]);
                         }
                     );
